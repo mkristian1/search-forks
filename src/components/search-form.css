@@ -1,0 +1,7 @@
+.search-form {
+    display: inline-block
+}
+
+.search-form input {
+    padding: 10px;
+}
