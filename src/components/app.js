@@ -1,10 +1,12 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
+import WithForksService from './with-fork-service';
 import './app.css';
 import ResultsTable from './results-table';
 import SearchForm from './search-form';
 
-const App = () => {
+const App = ({forksSevice}) => {
+    console.log(forksSevice);
     return (
         <Container fixed>
             <div className="app">
@@ -15,4 +17,4 @@ const App = () => {
     )
 }
 
-export default App;
+export default  WithForksService()(App);
