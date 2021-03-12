@@ -1,5 +1,5 @@
 import React from 'react';
-import { ForksServiceConsumer } from './forksContext';
+import { ForksServiceConsumer } from '../components/forksContext';
 
 const WithForksService = () => (Wrapped) => {
     return (props) => {
