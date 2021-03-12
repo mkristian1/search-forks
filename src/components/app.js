@@ -1,21 +1,52 @@
 import { Container } from '@material-ui/core';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { forksLoaded } from '../actions';
 import WithForksService from '../hoc/with-fork-service';
 import './app.css';
 import ResultsTable from './results-table';
 import SearchForm from './search-form';
 
-const App = ({forksSevice}) => {
-    console.log(forksSevice);
+const App = ({ forksData }) => {
     return (
         <Container fixed>
             <div className="app">
                 <SearchForm />
-                <ResultsTable />
+                <ResultsTable forksData={forksData} />
             </div>
         </Container>
     )
 }
- 
-export default  connect()(WithForksService()(App));
+
+class AppContainer extends Component {
+    componentDidMount() {
+        const { forksService, forksLoaded } = this.props;
+        const data = forksService.getForks();
+        forksLoaded(data)
+    }
+    render() {
+        const { forksData } = this.props;
+        console.log(forksData);
+        return <App forksData={forksData} />
+    }
+}
+
+const mapStateToProps = ({ forks }) => {
+    return {
+        forksData: forks
+    }
+}
+
+const MapDispatchToProps = (dispatch) => {
+    return {
+        forksLoaded: (newForks) => {
+            dispatch(forksLoaded(newForks.then(fork => fork)))
+        }
+    }
+
+    // return {
+    //     forksLoaded        
+    // }
+}
+
+export default WithForksService()(connect(mapStateToProps, MapDispatchToProps)(AppContainer));

@@ -15,11 +15,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
-const ResultsTable = () => {
+const ResultsTable = ({forksData}) => {
     return (
         <div className="result-table">
             <h1>Forks Results</h1>
-            <CustomPaginationActionsTable />
+            <CustomPaginationActionsTable forksData={forksData} />
         </div>
     )
 }
@@ -93,14 +93,14 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(id, fullRepository, owner, stars, repositoryLink) {
-    return {id, fullRepository, owner, stars, repositoryLink };
-}
+// function createData(id, fullRepository, owner, stars, repositoryLink) {
+//     return {id, fullRepository, owner, stars, repositoryLink };
+// }
 
-const rows = [
-    createData(1, '/test/sw', 'Jack', 90, `https://github.com/mkristian1/search-forks`),
+// const rows = [
+//     createData(1, '/test/sw', 'Jack', 90, `https://github.com/mkristian1/search-forks`),
   
-];
+// ];
 
 
 const useStyles2 = makeStyles({
@@ -109,12 +109,13 @@ const useStyles2 = makeStyles({
     },
 });
 
-function CustomPaginationActionsTable() {
+function CustomPaginationActionsTable({forksData}) {
+    console.log('ss', forksData);
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, forksData.length - page * rowsPerPage);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -130,21 +131,23 @@ function CustomPaginationActionsTable() {
             <Table className={classes.table} aria-label="custom pagination table">
                 <TableBody>
                     {(rowsPerPage > 0
-                        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : rows
-                    ).map((row) => (
-                        <TableRow key={row.id}>
+                        ? forksData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        : forksData
+                    ).map((fork) => (
+                        
+                        <TableRow key={fork.id}>
+                            {console.log('fork', fork)}
                             <TableCell component="th" scope="row">
-                                {row.fullRepository}
+                                {fork.fullRepository}
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
-                                {row.owner}
+                                {fork.owner}
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
-                                {row.stars}
+                                {fork.stars}
                             </TableCell>
                             <TableCell style={{ width: 360 }} align="right">
-                                 <a href={row.repositoryLink}>{row.repositoryLink}</a>
+                                 <a href={fork.repositoryLink}>{fork.repositoryLink}</a>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -160,7 +163,7 @@ function CustomPaginationActionsTable() {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                             colSpan={3}
-                            count={rows.length}
+                            count={forksData.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             SelectProps={{

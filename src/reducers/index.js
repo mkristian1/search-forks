@@ -1,12 +1,16 @@
 const initialState = {
-    forks: [
-        {name:'path', repository: '/src'}
-    ]
+    forks: [],
 }
 
 
 const reducer = (state = initialState, action) => {
+    console.log(action.type);
     switch (action.type) {
+        case 'FORKS_LOADED':
+            return {
+                ...state,
+                forks: action.payload
+            }
         case 'SEARCH_VALUE':
             return state;    
         default:
