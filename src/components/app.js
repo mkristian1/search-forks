@@ -1,5 +1,6 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
+import { connect } from 'react-redux';
 import WithForksService from '../hoc/with-fork-service';
 import './app.css';
 import ResultsTable from './results-table';
@@ -17,4 +18,4 @@ const App = ({forksSevice}) => {
     )
 }
  
-export default  WithForksService()(App);
+export default  connect()(WithForksService()(App));
