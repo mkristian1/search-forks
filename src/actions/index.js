@@ -5,4 +5,11 @@ const forksLoaded = (forks) => {
     }
 }
 
-export {forksLoaded}
+const searchForks = (foundForks) => {
+    return {
+        type: 'SEARCH_FORKS',
+        payload: foundForks,
+    }
+}
+
+export {forksLoaded, searchForks}
