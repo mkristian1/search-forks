@@ -110,7 +110,6 @@ const useStyles2 = makeStyles({
 });
 
 function CustomPaginationActionsTable({forksData}) {
-    console.log('ss', forksData);
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -136,7 +135,6 @@ function CustomPaginationActionsTable({forksData}) {
                     ).map((fork) => (
                         
                         <TableRow key={fork.id}>
-                            {console.log('fork', fork)}
                             <TableCell component="th" scope="row">
                                 {fork.fullRepository}
                             </TableCell>

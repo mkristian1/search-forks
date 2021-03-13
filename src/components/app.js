@@ -22,11 +22,10 @@ class AppContainer extends Component {
     componentDidMount() {
         const { forksService, forksLoaded } = this.props;
         const data = forksService.getForks();
-        forksLoaded(data)
+        data.then(fork => forksLoaded(fork))
     }
     render() {
         const { forksData } = this.props;
-        console.log(forksData);
         return <App forksData={forksData} />
     }
 }
@@ -40,13 +39,9 @@ const mapStateToProps = ({ forks }) => {
 const MapDispatchToProps = (dispatch) => {
     return {
         forksLoaded: (newForks) => {
-            dispatch(forksLoaded(newForks.then(fork => fork)))
+            dispatch(forksLoaded(newForks))
         }
     }
-
-    // return {
-    //     forksLoaded        
-    // }
 }
 
 export default WithForksService()(connect(mapStateToProps, MapDispatchToProps)(AppContainer));
