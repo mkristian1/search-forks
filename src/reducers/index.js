@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
                 forks: action.payload
             }
         case 'SEARCH_FORKS':
-            const filterText = action.payload;
+            const filterText = action.payload.toLowerCase();
             return {
                 ...state,
                 searchFilter: filterText,

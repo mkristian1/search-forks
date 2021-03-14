@@ -7,7 +7,7 @@ const SearchForm = ({handleOnChange, handleOnClick}) => {
     return (
         <Paper className="search-form"  component="form">
             <InputBase onChange={(e) => handleOnChange(e)}
-                placeholder="owner/:repositoryName"
+                placeholder="Repository Name"
                 inputProps={{ 'aria-label': 'search google maps' }}
             />
             <IconButton onClick={handleOnClick} aria-label="search">

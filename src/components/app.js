@@ -45,7 +45,7 @@ class AppContainer extends Component {
 
 const mapStateToProps = ({ forks, searchFilter, loading }) => {
     return {
-        forksData: forks.filter(({ fullRepository }) => fullRepository.includes(searchFilter)),
+        forksData: forks.filter(({ fullRepository }) => fullRepository.toLowerCase().includes(searchFilter) || fullRepository.toLowerCase().includes(searchFilter)),
         loading: loading,
     }
 }
