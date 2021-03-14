@@ -7,11 +7,11 @@ import './app.css';
 import ResultsTable from './results-table';
 import SearchForm from './search-form';
 
-const App = ({ forksData, searchForks }) => {
+const App = ({ forksData, searchForks, loading }) => {
     const [wordForSearching, setWordForSearching] = useState();
 
     const handleOnChange = (e) => {
-        setWordForSearching(e.target.value);        
+        setWordForSearching(e.target.value);
     }
     const handleOnClick = () => {
         searchForks(wordForSearching)
@@ -19,11 +19,13 @@ const App = ({ forksData, searchForks }) => {
     return (
         <Container fixed>
             <div className="app">
-                <SearchForm 
-                 handleOnChange={handleOnChange}
-                 handleOnClick={handleOnClick} />
-                <ResultsTable 
-                forksData={forksData}  />
+                <SearchForm
+                    handleOnChange={handleOnChange}
+                    handleOnClick={handleOnClick} />
+                <ResultsTable
+                    forksData={forksData}
+                    loading={loading}
+                />
             </div>
         </Container>
     )
@@ -31,19 +33,20 @@ const App = ({ forksData, searchForks }) => {
 
 class AppContainer extends Component {
     componentDidMount() {
-        const { forksService, forksLoaded} = this.props;
+        const { forksService, forksLoaded } = this.props;
         const data = forksService.getForks();
         data.then(fork => forksLoaded(fork))
     }
     render() {
-        const { forksData, searchForks } = this.props;
-        return <App forksData={forksData} searchForks={searchForks} />
+        const { forksData, searchForks, loading } = this.props;
+        return <App forksData={forksData} searchForks={searchForks} loading={loading} />
     }
 }
 
-const mapStateToProps = ({ forks }) => {
+const mapStateToProps = ({ forks, searchFilter, loading }) => {
     return {
-        forksData: forks
+        forksData: forks.filter(({ fullRepository }) => fullRepository.includes(searchFilter)),
+        loading: loading,
     }
 }
 

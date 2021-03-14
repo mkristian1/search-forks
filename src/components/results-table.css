@@ -1,0 +1,13 @@
+.results-table {
+    padding: 2rem 0;
+}
+
+.results-table .stars {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.results-table .stars svg {
+    margin-right: 7px;
+}

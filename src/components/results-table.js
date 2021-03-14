@@ -14,13 +14,18 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import StarsIcon from '@material-ui/icons/Stars';
+import { CircularProgress } from '@material-ui/core';
+import './results-table.css';
 
-const ResultsTable = ({forksData}) => {
+const ResultsTable = ({ forksData, loading }) => {
     return (
-        <div className="result-table">
-            <h1>Forks Results</h1>
-            <CustomPaginationActionsTable forksData={forksData} />
-        </div>
+        loading ? <div className="results-table"><CircularProgress /></div> :
+            <div className="results-table">
+                <h1>Forks Results</h1>
+                <CustomPaginationActionsTable forksData={forksData} />
+            </div>
+
     )
 }
 
@@ -93,15 +98,6 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-// function createData(id, fullRepository, owner, stars, repositoryLink) {
-//     return {id, fullRepository, owner, stars, repositoryLink };
-// }
-
-// const rows = [
-//     createData(1, '/test/sw', 'Jack', 90, `https://github.com/mkristian1/search-forks`),
-  
-// ];
-
 
 const useStyles2 = makeStyles({
     table: {
@@ -109,7 +105,7 @@ const useStyles2 = makeStyles({
     },
 });
 
-function CustomPaginationActionsTable({forksData}) {
+function CustomPaginationActionsTable({ forksData }) {
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -133,7 +129,7 @@ function CustomPaginationActionsTable({forksData}) {
                         ? forksData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         : forksData
                     ).map((fork) => (
-                        
+
                         <TableRow key={fork.id}>
                             <TableCell component="th" scope="row">
                                 {fork.fullRepository}
@@ -142,10 +138,10 @@ function CustomPaginationActionsTable({forksData}) {
                                 {fork.owner}
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
-                                {fork.stars}
+                                <div className="stars"><StarsIcon /> {fork.stars}</div>
                             </TableCell>
                             <TableCell style={{ width: 360 }} align="right">
-                                 <a href={fork.repositoryLink}>{fork.repositoryLink}</a>
+                                <a href={fork.repositoryLink}>{fork.repositoryLink}</a>
                             </TableCell>
                         </TableRow>
                     ))}
