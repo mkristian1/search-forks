@@ -6,7 +6,7 @@ import { ForksServiceProvider } from './components/forksContext';
 import ForkService from './services/forks-service';
 import store from './store';
 
-const forkService = new ForkService;
+const forkService = new ForkService();
 
 ReactDOM.render(
   <React.StrictMode>
